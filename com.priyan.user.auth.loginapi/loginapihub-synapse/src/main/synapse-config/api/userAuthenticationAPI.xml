@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<api context="/users" name="userAuthenticationAPI" xmlns="http://ws.apache.org/ns/synapse">
+    <resource methods="POST" protocol="http" uri-template="/">
+        <inSequence>
+            <sequence key="loginSeq"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>
+    
+    <resource methods="GET" protocol="http" uri-template="/{username}">
+        <inSequence>
+            <sequence key="getUserProfileSeq"/>
+        </inSequence>
+        <outSequence/>
+        <faultSequence/>
+    </resource>    
+    
+</api>

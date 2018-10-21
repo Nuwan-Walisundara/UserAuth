@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="getUserProfileSeq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+	<property name="authorizationHeader" expression="$trp:Authorization" />
+	<property expression="get-property('uri.var.username')" name="uriUsername" scope="default" type="STRING" />
+	
+    <filter regex="^Bearer [a-zA-Z0-9-]*$" source="$ctx:authorizationHeader">
+    	<then>
+			<log level="custom">
+				<property name="Header ====================== " value="TRUE"/>
+			</log>    		
+			<script language="js">
+		         <![CDATA[
+		         	var authHeader = mc.getProperty('authorizationHeader');	
+		       	 	var splittedParts = authHeader.split('Bearer ');
+		           	var accessToken = splittedParts[1];
+		            mc.setProperty("accessToken", accessToken);
+		         ]]>
+		    </script>
+		    
+	    	<log level="custom">
+				<property name="Access Token ====================== " expression="$ctx:accessToken"/>
+			</log>
+		    
+		    <dblookup>
+				<connection>
+					<pool>
+						<dsName>jdbc/USER_AUTH_DB</dsName>
+					</pool>
+				</connection>
+				<statement>
+					<sql><![CDATA[select up.user_profile_id,up.username,up.full_name,up.phone_no  from user_profile up,user_token ut where up.user_profile_id=ut.user_profile_id and binary access_token =?]]></sql>
+					<parameter expression="$ctx:accessToken" type="VARCHAR" />
+					<result name="userProfileId" column="user_profile_id" />
+					<result name="username" column="username" />
+					<result name="fullName" column="full_name" />
+					<result name="phoneNo" column="phone_no" />
+				</statement>
+			</dblookup>
+
+			<filter xpath="not(boolean(get-property('userProfileId')))">
+			<then>
+		        <!-- {"message": "Invalid token"} -->
+	            <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
+	            <property value="401" name="HTTP_SC" scope="axis2" type="STRING"/>
+			    
+				  	<payloadFactory media-type="json">
+					    <format>
+							{"message": "Invalid token"}					
+						</format>
+				    </payloadFactory>
+			    <respond/> 
+			</then>
+			
+			<else>
+				<filter xpath="get-property('uriUsername')!=get-property('username')">
+				
+					<then>
+			        	<!-- {"message": "No users found"} -->
+			            <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
+			            <property value="404" name="HTTP_SC" scope="axis2" type="STRING"/>
+				    
+					  	<payloadFactory media-type="json">
+						    <format>
+								{"message": "No users found"}					
+							</format>
+					    </payloadFactory>
+					    <respond/>  
+					</then>
+					
+					<else>
+						<payloadFactory media-type="json">
+						    <format>
+								{
+								    "username": "$1",
+								    "fullName": "$2",
+								    "phoneNo": "$3"
+								}
+							</format>
+						    <args>
+						      <arg evaluator="xml" expression="get-property('username')" xmlns:ns="http://org.apache.synapse/xsd"/>
+						      <arg evaluator="xml" expression="get-property('fullName')" xmlns:ns="http://org.apache.synapse/xsd"/>
+						      <arg evaluator="xml" expression="get-property('phoneNo')" xmlns:ns="http://org.apache.synapse/xsd"/>
+						    </args>
+					  	</payloadFactory>
+					  <respond/> 				
+					</else>
+				</filter>
+
+			</else>
+			</filter>		    	
+    	</then>
+    	
+    	<else>
+        	<!-- {"error": "No Authorization header"} -->
+            <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
+            <property value="401" name="HTTP_SC" scope="axis2" type="STRING"/>
+		    
+			  	<payloadFactory media-type="json">
+				    <format>
+						{"error": "Please add token header eg :- Authorization Bearer [ACCESS_TOKEN]"}					
+					</format>
+			    </payloadFactory>
+			    <respond/>    		    	
+		</else>
+    </filter>
+	
+
+
+
+	
+</sequence>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<artifacts>
+    <artifact name="userAuthenticationAPI" groupId="com.priyan.user.auth.api" version="1.0.0" type="synapse/api" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/api/userAuthenticationAPI.xml</file>
+    </artifact>
+    
+    <artifact name="defaultUserEndpoint" groupId="com.priyan.user.auth.endpoint" version="1.0.0" type="synapse/endpoint" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/endpoints/defaultUserEndpoint.xml</file>
+    </artifact>
+
+    <artifact name="loginSeq" groupId="com.priyan.user.auth.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/loginSeq.xml</file>
+    </artifact>
+    <artifact name="getUserProfileSeq" groupId="com.priyan.user.auth.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/getUserProfileSeq.xml</file>
+    </artifact>
+    <artifact name="commonFault" groupId="com.priyan.user.auth.sequence" version="1.0.0" type="synapse/sequence" serverRole="EnterpriseServiceBus">
+        <file>src/main/synapse-config/sequences/commonFault.xml</file>
+    </artifact>
+    
+</artifacts>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequence name="loginSeq" trace="disable" xmlns="http://ws.apache.org/ns/synapse">
+
+	<property expression="json-eval($.username)" name="username" scope="default" type="STRING" />
+	<property expression="json-eval($.password)" name="password" scope="default" type="STRING" />
+
+	<dblookup>
+		<connection>
+			<pool>
+				<dsName>jdbc/USER_AUTH_DB</dsName>
+			</pool>
+		</connection>
+		<statement>
+			<sql><![CDATA[SELECT user_profile_id FROM user_profile where username=? and BINARY password=?]]></sql>
+			<parameter expression="$ctx:username" type="VARCHAR" />
+			<parameter expression="$ctx:password" type="VARCHAR" />
+			<result name="RESULT" column="user_profile_id" />
+		</statement>
+	</dblookup>
+	<filter xpath="not(boolean(get-property('RESULT')))">
+        <then>
+        	<!-- {"error": "Invalid username/password"} -->
+            <property action="remove" name="TRANSPORT_HEADERS" scope="axis2"/>
+            <property value="401" name="HTTP_SC" scope="axis2" type="STRING"/>
+		    
+			  	<payloadFactory media-type="json">
+				    <format>
+						{"error": "Invalid username/password"}					
+					</format>
+			    </payloadFactory>
+			    
+			    <respond/>
+        </then>
+        <else>
+			<dblookup>
+				<connection>
+					<pool>
+						<dsName>jdbc/USER_AUTH_DB</dsName>
+					</pool>
+				</connection>
+				<statement>
+					<sql><![CDATA[SELECT access_token FROM user_token where user_profile_id=?]]></sql>
+					<parameter expression="$ctx:RESULT" type="VARCHAR" />
+					<result name="accessToken" column="access_token" />
+				</statement>
+			</dblookup>
+
+				<payloadFactory media-type="json">
+				    <format>
+						{"token": "$1"}
+					</format>
+				    <args>
+				      <arg evaluator="xml" expression="get-property('accessToken')" xmlns:ns="http://org.apache.synapse/xsd"/>
+				    </args>
+			  	</payloadFactory>
+			  <respond/>        
+        </else>
+    </filter>
+
+</sequence>
