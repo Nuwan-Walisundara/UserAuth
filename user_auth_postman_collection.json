@@ -1,0 +1,172 @@
+{
+	"id": "114159f3-2625-f771-f479-08aeb2a9694a",
+	"name": "SINGA",
+	"description": "",
+	"order": [
+		"1c02c2e3-2f4e-6a8b-3a48-40cb49b8bda4",
+		"864b005d-189b-e1a7-59e4-ede9fb47f504",
+		"88411ccb-c8de-77dc-8150-50da01f8b6c2",
+		"65a7ace0-ebf6-96d4-fb75-4dcc914c5aaa",
+		"9a2cb24c-2c6d-b932-6183-b34a2608e80d"
+	],
+	"folders": [],
+	"folders_order": [],
+	"timestamp": 1539948369865,
+	"owner": "567170",
+	"public": false,
+	"requests": [
+		{
+			"id": "1c02c2e3-2f4e-6a8b-3a48-40cb49b8bda4",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "localhost:8033/user/add",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "114159f3-2625-f771-f479-08aeb2a9694a",
+			"data": [],
+			"dataMode": "raw",
+			"name": "localhost:8033/user/add",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1539948372793,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"username\": \"Vikum\",\n\t\"password\": \"V@123\",\n\t\"fullName\": \"Vikum Silva\",\n\t\"phoneNo\": \"+94773331111\"\n\n}"
+		},
+		{
+			"id": "65a7ace0-ebf6-96d4-fb75-4dcc914c5aaa",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://52.66.246.157:8280/users",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "114159f3-2625-f771-f479-08aeb2a9694a",
+			"data": [],
+			"dataMode": "raw",
+			"name": "ESB_http://52.66.246.157:8280/users",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1540188972450,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"username\": \"Rajith\",\n\t\"password\": \"RK@123\"\n}"
+		},
+		{
+			"id": "864b005d-189b-e1a7-59e4-ede9fb47f504",
+			"headers": "",
+			"headerData": [
+				{
+					"key": "",
+					"value": "A",
+					"description": "",
+					"enabled": false
+				}
+			],
+			"url": "http://localhost:8033/users/Charith",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "114159f3-2625-f771-f479-08aeb2a9694a",
+			"data": null,
+			"dataMode": "params",
+			"name": "http://localhost:8033/users/Charith",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1539948382408,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		},
+		{
+			"id": "88411ccb-c8de-77dc-8150-50da01f8b6c2",
+			"headers": "Content-Type: application/json\n",
+			"headerData": [
+				{
+					"key": "Content-Type",
+					"value": "application/json",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://localhost:8033/user",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "POST",
+			"collectionId": "114159f3-2625-f771-f479-08aeb2a9694a",
+			"data": [],
+			"dataMode": "raw",
+			"name": "http://localhost:8033/user",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1539948392201,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {},
+			"rawModeData": "{\n\t\"username\": \"Charith\",\n\t\"password\": \"Charith@123\"\n}"
+		},
+		{
+			"id": "9a2cb24c-2c6d-b932-6183-b34a2608e80d",
+			"headers": "Authorization: Bearer 66934cba-9688-4bab-8098-5756b856a692\n",
+			"headerData": [
+				{
+					"key": "Authorization",
+					"value": "Bearer 66934cba-9688-4bab-8098-5756b856a692",
+					"description": "",
+					"enabled": true
+				}
+			],
+			"url": "http://52.66.246.157:8280/users/Rajith",
+			"queryParams": [],
+			"pathVariables": {},
+			"pathVariableData": [],
+			"preRequestScript": null,
+			"method": "GET",
+			"collectionId": "114159f3-2625-f771-f479-08aeb2a9694a",
+			"data": null,
+			"dataMode": "params",
+			"name": "ESB_http://52.66.246.157:8280/users/Rajith",
+			"description": "",
+			"descriptionFormat": "html",
+			"time": 1540188981762,
+			"version": 2,
+			"responses": [],
+			"tests": null,
+			"currentHelper": "normal",
+			"helperAttributes": {}
+		}
+	]
+}
