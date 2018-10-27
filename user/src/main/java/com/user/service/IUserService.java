@@ -1,5 +1,7 @@
 package com.user.service;
 
+import com.user.model.UserAuthBean;
+import com.user.model.UserDto;
 import com.user.model.UserProfileBean;
 import com.user.model.UserRequestBean;
 import com.user.model.UserTokenResponseBean;
@@ -25,7 +27,6 @@ public interface IUserService {
 	 */
 	public Integer isAuthencatedUser(String username, String password);
 
-
 	/**
 	 * Gets the user profile.
 	 *
@@ -35,12 +36,12 @@ public interface IUserService {
 	 */
 	public UserProfileBean getUserProfile(String userName, String accessToken);
 
-	public Object getUserAuthInfo(String username);
+	public UserDto getUserAuthInfo(String username, String password) throws UserNotFoundException;
 
 	public String issueToken(Integer tokenId);
 
 	public UserTokenResponseBean getTokenByUsername(String userName);
 
-	
-	
+	public boolean isValidUser(UserAuthBean userRequestBean);
+
 }

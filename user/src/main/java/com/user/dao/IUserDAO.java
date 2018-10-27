@@ -1,9 +1,13 @@
 package com.user.dao;
 
-import com.user.model.LoginInfoBean;
+import com.user.model.UserDto;
+
+import org.springframework.dao.EmptyResultDataAccessException;
+
 import com.user.model.TokenBean;
 import com.user.model.UserProfileBean;
 import com.user.model.UserTokenResponseBean;
+
 /**
  * The Interface IUserDAO.
  */
@@ -12,12 +16,12 @@ public interface IUserDAO {
 	/**
 	 * Adds the users.
 	 *
-	 * @param userBean 
+	 * @param userBean
 	 * @return userBean
 	 */
 	public Integer addUserProfile(UserProfileBean userProfileBean);
-	
-	public void addUserCredentials(LoginInfoBean loginInfoBean);
+
+	public void addUserCredentials(UserDto loginInfoBean);
 
 	/**
 	 * check if User exists.
@@ -30,8 +34,8 @@ public interface IUserDAO {
 	/**
 	 * Checks if authencatedUser.
 	 *
-	 * @param username 
-	 * @param password 
+	 * @param username
+	 * @param password
 	 * @return the userProfileId
 	 */
 	public Integer isAuthencatedUser(String username, String password);
@@ -43,14 +47,14 @@ public interface IUserDAO {
 	 * @param userToken
 	 */
 	public Integer updateTokenForUser(TokenBean tokenBean);
-	
+
 	/**
 	 * check if Token exists.
 	 *
-	 * @param userProfileId 
+	 * @param userProfileId
 	 */
 	public String tokenExists(Integer userProfileId);
-	
+
 	/**
 	 * Gets the user profile.
 	 *
@@ -58,13 +62,13 @@ public interface IUserDAO {
 	 * @param accessToken
 	 * @return the userProfile
 	 */
-	public UserProfileBean getUserProfile(String userName,String accessToken);
+	public UserProfileBean getUserProfile(String userName, String accessToken);
 
-	public Object getUserAuthInfo(String username);
-	
 	public String issueToken(Integer tokenId);
-	
+
 	public UserTokenResponseBean getTokenByUsername(String userName);
-	
-	
+
+
+	public UserDto getUser(final String username, final String password) throws EmptyResultDataAccessException;
+
 }
